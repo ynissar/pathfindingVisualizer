@@ -4,8 +4,8 @@ import './PathVisualizer.css';
 
 const GRID_ROWS = 20;
 const GRID_COLUMNS = 50;
-const START_NODE_ROW = 0;
-const START_NODE_COLUMN = 0;
+const START_NODE_ROW = 9;
+const START_NODE_COLUMN = 9;
 const END_NODE_ROW = 9;
 const END_NODE_COLUMN = 40;
 
@@ -68,7 +68,6 @@ class PathVisualizer extends Component {
                                             isEnd = {isEnd}
                                             row = {row}
                                             column = {column}
-
 
                                         ></Node>
                                     })

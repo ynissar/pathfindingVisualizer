@@ -7,3 +7,11 @@
   /* background-color: blue; <-- for when we implement colors */
   display: inline-block;
 }
+
+.end-node {
+  background-color: red;
+}
+
+.start-node {
+  background-color: green;
+}

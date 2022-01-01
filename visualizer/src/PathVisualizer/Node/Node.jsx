@@ -12,8 +12,11 @@ class Node extends Component {
     }
 
     render() {
-        return <div className='node'>
-                </div>
+        const {isEnd, isStart} = this.props;
+        const endOrStartClass = isEnd ? 'end-node' : isStart ? 'start-node': '';
+        
+
+        return <div className={`node ${endOrStartClass}`}></div>
     }
 
 }
