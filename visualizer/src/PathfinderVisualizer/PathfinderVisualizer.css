@@ -1,9 +1,8 @@
 .grid-container {
   position: absolute;
-  left: 30vw;
+  left: 15vw;
   top: 10vh;
   display: grid;
   height: 100px;
   width: 600px;
-  grid-template-columns: repeat(30, auto);
 }
