@@ -1,8 +1,8 @@
 .node {
   margin: 0px;
   padding: 0px;
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
   outline: 1px solid rgb(49, 133, 133);
   /* background-color: blue; <-- for when we implement colors */
   display: inline-block;
@@ -14,4 +14,8 @@
 
 .start-node {
   background-color: green;
+}
+
+.checked-node {
+  background-color: blue;
 }
