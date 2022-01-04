@@ -19,3 +19,7 @@
 .checked-node {
   background-color: blue;
 }
+
+.wall-node {
+  background-color: black;
+}
