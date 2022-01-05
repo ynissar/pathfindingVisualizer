@@ -9,6 +9,16 @@ class Node extends Component {
     this.state = {};
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    if (
+      this.props.isChecked === nextProps.isChecked &&
+      this.props.isWall === nextProps.isWall &&
+      this.props.isShortest === nextProps.isShortest
+    ) {
+      return false;
+    }
+    return true;
+  }
   // Render()
   // Puts node into the DOM, adds additional class depending on if it is the end or start
   render() {
@@ -18,15 +28,20 @@ class Node extends Component {
       isEnd,
       isStart,
       isChecked,
+      isShortest,
       isWall,
       onMouseDown,
       onMouseEnter,
       onMouseUp,
+      reference,
     } = this.props;
+
     const endOrStartClass = isEnd
       ? "end-node"
       : isStart
       ? "start-node"
+      : isShortest && isChecked
+      ? "shortest-node"
       : isChecked
       ? "checked-node"
       : isWall
@@ -35,8 +50,9 @@ class Node extends Component {
 
     return (
       <div
+        ref={reference}
         id={`node-${row}-${column}`}
-        className={`node ${endOrStartClass}`}
+        className={`node bobofinkleton ${endOrStartClass}`}
         onMouseDown={() => onMouseDown(row, column)}
         onMouseEnter={() => onMouseEnter(row, column)}
         onMouseUp={() => onMouseUp()}
@@ -46,8 +62,3 @@ class Node extends Component {
 }
 
 export default Node;
-
-export const DEFAULT_NODE = {
-  row: 0,
-  column: 0,
-};

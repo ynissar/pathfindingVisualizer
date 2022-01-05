@@ -1,7 +1,7 @@
-import { Component } from 'react';
-import './App.css';
-import PathVisualizer from './PathVisualizer/PathVisualizer';
-import Practice from './Practice';
+import { Component } from "react";
+import "./App.css";
+import PathVisualizer from "./PathVisualizer/PathVisualizer";
+import Practice from "./Practice";
 
 class App extends Component {
   render() {

@@ -5,11 +5,11 @@ import { dijkstra, getNodesInShortestPathOrder } from "./Algorithms/dijkstra";
 
 // Constants for start node, end node, # of rows and # of columns
 const GRID_ROWS = 20;
-const GRID_COLUMNS = 50;
+const GRID_COLUMNS = 40;
 const START_NODE_ROW = 9;
 const START_NODE_COLUMN = 10;
 const END_NODE_ROW = 9;
-const END_NODE_COLUMN = 40;
+const END_NODE_COLUMN = 30;
 
 class PathVisualizer extends Component {
   // Constructor
@@ -17,7 +17,7 @@ class PathVisualizer extends Component {
     super(props);
 
     this.state = {
-      grid: [],
+      grid: createGrid(),
       mouseIsPressed: false,
     };
 
@@ -28,9 +28,6 @@ class PathVisualizer extends Component {
 
   // ComponentsDidMount, runs after render(), then causes render to run again
   // Creates grid for PathVisualizer inputting Nodes
-  componentDidMount() {
-    this.setState({ grid: createGrid() }); // Sets state grid
-  }
 
   handleMouseDown(row, column) {
     console.log(`mouse down at ${row} ${column}`);
@@ -56,19 +53,27 @@ class PathVisualizer extends Component {
     this.setState({ mouseIsPressed: false });
   }
 
-  animateDijkstra(visitedNodesInOrder) {
-    console.log(this.state.grid);
-
-    for (let i = 1; i < visitedNodesInOrder.length + 1; i++) {
-      console.log(this.state.grid);
-
+  animateDijkstra(visitedNodesInOrder, shortestPath) {
+    for (let i = 1; i <= visitedNodesInOrder.length; i++) {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         node.isChecked = true;
         const newGrid = this.state.grid.slice();
         newGrid[node.row][node.column] = node;
         this.setState({ grid: newGrid });
-      }, 50 * i);
+      }, 20 * i);
+    }
+  }
+
+  animateShortest(shortestPath) {
+    for (let i = 0; i < shortestPath.length; i++) {
+      setTimeout(() => {
+        const node = shortestPath[i];
+        node.isShortest = true;
+        const newGrid = this.state.grid.slice();
+        newGrid[node.row][node.column] = node;
+        this.setState({ grid: newGrid });
+      }, 20 * i);
     }
   }
 
@@ -82,16 +87,16 @@ class PathVisualizer extends Component {
     const shortestPath = getNodesInShortestPathOrder(endNode);
     console.log(visitedNodesInOrder);
     console.log(shortestPath);
-    this.animateDijkstra(visitedNodesInOrder);
+    this.animateDijkstra(visitedNodesInOrder, shortestPath);
+    this.animateShortest(shortestPath);
   }
 
   // Render(), mounts to DOM
   // Renders a <Node /> for each item in grid
   render() {
     const { grid } = this.state;
-    console.log(grid);
-    console.log(this.state.mouseIsPressed);
-    console.log("render");
+    // console.log(this.state.mouseIsPressed);
+    // console.log("render");
 
     return (
       <div>
@@ -115,6 +120,8 @@ class PathVisualizer extends Component {
                       isWall,
                       previousNode,
                       isChecked,
+                      isShortest,
+                      reference,
                     } = node;
                     return (
                       <Node
@@ -128,9 +135,11 @@ class PathVisualizer extends Component {
                         isWall={isWall}
                         previousNode={previousNode}
                         isChecked={isChecked}
+                        isShortest={isShortest}
                         onMouseDown={this.handleMouseDown}
                         onMouseEnter={this.handleMouseEnter}
                         onMouseUp={this.handleMouseUp}
+                        ref={reference}
                       ></Node>
                     );
                   })}
@@ -173,6 +182,8 @@ function createNode(row, column) {
     isWall: false,
     previousNode: null,
     isChecked: false,
+    isShortest: false,
+    reference: React.createRef(),
   };
 
   return node;

@@ -14,9 +14,14 @@ class PracticeChild extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props.reference);
+  }
+
   render() {
+    const { reference } = this.props;
     return (
-      <div>
+      <div ref={reference}>
         <p>Hello!</p>
       </div>
     );
