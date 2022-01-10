@@ -1,24 +1,30 @@
 import { getUnvisitedNeighbours } from "./general";
 
-function BSF(grid, startNode, endNode) {
+export function BFS(grid, startNode, endNode) {
   if (!startNode || !endNode || startNode == endNode) {
     return false;
   }
 
-  const visitedNodesInOrder = [];
-  const nodeQueue = [];
+  let visitedNodesInOrder = [];
+  let nodeQueue = [];
   nodeQueue.push(startNode);
   startNode.isVisited = true;
   visitedNodesInOrder.push(startNode);
 
-  while (unvisitedNodeQueue.length !== 0) {
-    const currentNode = nodeQueue.pop();
+  while (nodeQueue.length !== 0) {
+    let currentNode = nodeQueue.shift();
+    visitedNodesInOrder.push(currentNode);
 
-    currentUnvisitedAdjacent = getUnvisitedNeighbours(currentNode, grid);
+    if (currentNode == endNode) {
+      return visitedNodesInOrder;
+    }
+
+    let currentUnvisitedAdjacent = getUnvisitedNeighbours(currentNode, grid);
 
     for (const adjacentNode of currentUnvisitedAdjacent) {
+      adjacentNode.previousNode = currentNode;
+      adjacentNode.isVisited = true;
       nodeQueue.push(adjacentNode);
-      continue;
     }
   }
 }

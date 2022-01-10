@@ -3,6 +3,7 @@ import Node from "./Node/Node";
 import "./PathVisualizer.css";
 import { dijkstra, getNodesInShortestPathOrder } from "./Algorithms/dijkstra";
 import { DFS } from "./Algorithms/DFS";
+import { BFS } from "./Algorithms/BFS";
 import { A } from "./Algorithms/A";
 
 // Constants for start node, end node, # of rows and # of columns
@@ -56,14 +57,14 @@ class PathVisualizer extends Component {
   }
 
   animateDijkstra(visitedNodesInOrder) {
-    for (let i = 1; i <= visitedNodesInOrder.length; i++) {
+    for (let i = 0; i < visitedNodesInOrder.length; i++) {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
         node.isChecked = true;
         const newGrid = this.state.grid.slice();
         newGrid[node.row][node.column] = node;
         this.setState({ grid: newGrid });
-      }, 100 * i);
+      }, 20 * i);
     }
   }
 
@@ -122,6 +123,22 @@ class PathVisualizer extends Component {
     this.animateShortest(shortestPath);
   }
 
+  visualizeBFS() {
+    const { grid } = this.state;
+
+    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
+    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+
+    const visitedNodesInOrder = BFS(grid, startNode, endNode);
+
+    console.log(visitedNodesInOrder);
+    const shortestPath = getNodesInShortestPathOrder(endNode);
+    console.log(shortestPath);
+    console.log(visitedNodesInOrder);
+    this.animateDijkstra(visitedNodesInOrder);
+    this.animateShortest(shortestPath);
+  }
+
   // Render(), mounts to DOM
   // Renders a <Node /> for each item in grid
   render() {
@@ -139,6 +156,9 @@ class PathVisualizer extends Component {
         </button>
         <button onClick={() => this.visualizeAstar()}>
           Visualize A* Algorithm
+        </button>
+        <button onClick={() => this.visualizeBFS()}>
+          Visualize Breadth-First-Search Algorithm
         </button>
         <div className="grid">
           {
