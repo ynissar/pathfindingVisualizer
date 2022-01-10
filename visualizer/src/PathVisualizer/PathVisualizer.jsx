@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import Node from "./Node/Node";
 import "./PathVisualizer.css";
 import { dijkstra, getNodesInShortestPathOrder } from "./Algorithms/dijkstra";
+import { DFS } from "./Algorithms/DFS";
+import { A } from "./Algorithms/A";
 
 // Constants for start node, end node, # of rows and # of columns
-const GRID_ROWS = 20;
-const GRID_COLUMNS = 40;
-const START_NODE_ROW = 9;
-const START_NODE_COLUMN = 10;
-const END_NODE_ROW = 9;
-const END_NODE_COLUMN = 30;
+const GRID_ROWS = 10;
+const GRID_COLUMNS = 15;
+const START_NODE_ROW = 5;
+const START_NODE_COLUMN = 3;
+const END_NODE_ROW = 5;
+const END_NODE_COLUMN = 12;
 
 class PathVisualizer extends Component {
   // Constructor
@@ -53,7 +55,7 @@ class PathVisualizer extends Component {
     this.setState({ mouseIsPressed: false });
   }
 
-  animateDijkstra(visitedNodesInOrder, shortestPath) {
+  animateDijkstra(visitedNodesInOrder) {
     for (let i = 1; i <= visitedNodesInOrder.length; i++) {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
@@ -61,7 +63,7 @@ class PathVisualizer extends Component {
         const newGrid = this.state.grid.slice();
         newGrid[node.row][node.column] = node;
         this.setState({ grid: newGrid });
-      }, 20 * i);
+      }, 100 * i);
     }
   }
 
@@ -87,7 +89,36 @@ class PathVisualizer extends Component {
     const shortestPath = getNodesInShortestPathOrder(endNode);
     console.log(visitedNodesInOrder);
     console.log(shortestPath);
-    this.animateDijkstra(visitedNodesInOrder, shortestPath);
+    this.animateDijkstra(visitedNodesInOrder);
+    this.animateShortest(shortestPath);
+  }
+
+  visualizeDFS() {
+    const { grid } = this.state;
+
+    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
+    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+
+    const visitedNodesInOrder = DFS(grid, startNode, endNode);
+
+    console.log(visitedNodesInOrder);
+    this.animateDijkstra(visitedNodesInOrder);
+    this.animateShortest(visitedNodesInOrder);
+  }
+
+  visualizeAstar() {
+    const { grid } = this.state;
+
+    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
+    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+
+    const visitedNodesInOrder = A(grid, startNode, endNode);
+
+    console.log(visitedNodesInOrder);
+    const shortestPath = getNodesInShortestPathOrder(endNode);
+    console.log(shortestPath);
+    console.log(visitedNodesInOrder);
+    this.animateDijkstra(visitedNodesInOrder);
     this.animateShortest(shortestPath);
   }
 
@@ -103,6 +134,12 @@ class PathVisualizer extends Component {
         <button onClick={() => this.visualizeDijkstra()}>
           Visualize Dijkstra's Algorithm
         </button>
+        <button onClick={() => this.visualizeDFS()}>
+          Visualize Depth-First-Search Algorithm
+        </button>
+        <button onClick={() => this.visualizeAstar()}>
+          Visualize A* Algorithm
+        </button>
         <div className="grid">
           {
             // using a nested map methods to create each Node component with props from this.state.grid's nodes' properties
@@ -116,6 +153,8 @@ class PathVisualizer extends Component {
                       isStart,
                       isEnd,
                       distance,
+                      distanceToEnd,
+                      fcost,
                       isVisited,
                       isWall,
                       previousNode,
@@ -131,6 +170,8 @@ class PathVisualizer extends Component {
                         isStart={isStart}
                         isEnd={isEnd}
                         distance={distance}
+                        distanceToEnd={distanceToEnd}
+                        fcost={fcost}
                         isVisited={isVisited}
                         isWall={isWall}
                         previousNode={previousNode}
@@ -178,6 +219,8 @@ function createNode(row, column) {
     isStart: row == START_NODE_ROW && column == START_NODE_COLUMN,
     isEnd: row == END_NODE_ROW && column == END_NODE_COLUMN,
     distance: Infinity,
+    distanceToEnd: Infinity,
+    fcost: Infinity,
     isVisited: false,
     isWall: false,
     previousNode: null,

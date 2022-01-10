@@ -29,6 +29,7 @@ class Node extends Component {
       isStart,
       isChecked,
       isShortest,
+      fcost,
       isWall,
       onMouseDown,
       onMouseEnter,
@@ -56,7 +57,9 @@ class Node extends Component {
         onMouseDown={() => onMouseDown(row, column)}
         onMouseEnter={() => onMouseEnter(row, column)}
         onMouseUp={() => onMouseUp()}
-      ></div>
+      >
+        <p>{this.props.fcost}</p>
+      </div>
     );
   }
 }
