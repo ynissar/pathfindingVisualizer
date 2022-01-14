@@ -13,7 +13,9 @@ class Node extends Component {
     if (
       this.props.isChecked === nextProps.isChecked &&
       this.props.isWall === nextProps.isWall &&
-      this.props.isShortest === nextProps.isShortest
+      this.props.isShortest === nextProps.isShortest &&
+      this.props.isEnd === nextProps.isEnd &&
+      this.props.isStart === nextProps.isStart
     ) {
       return false;
     }
@@ -56,10 +58,8 @@ class Node extends Component {
         className={`node bobofinkleton ${endOrStartClass}`}
         onMouseDown={() => onMouseDown(row, column)}
         onMouseEnter={() => onMouseEnter(row, column)}
-        onMouseUp={() => onMouseUp()}
-      >
-        <p>{this.props.fcost}</p>
-      </div>
+        onMouseUp={() => onMouseUp(row, column)}
+      ></div>
     );
   }
 }

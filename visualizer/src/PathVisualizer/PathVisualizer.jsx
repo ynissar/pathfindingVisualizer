@@ -1,18 +1,23 @@
 import React, { Component } from "react";
 import Node from "./Node/Node";
 import "./PathVisualizer.css";
-import { dijkstra, getNodesInShortestPathOrder } from "./Algorithms/dijkstra";
-import { DFS } from "./Algorithms/DFS";
-import { BFS } from "./Algorithms/BFS";
-import { A } from "./Algorithms/A";
+import {
+  dijkstra,
+  getNodesInShortestPathOrder,
+} from "./Algorithms/pathfinding/dijkstra";
+import { DFS } from "./Algorithms/pathfinding/DFS";
+import { BFS } from "./Algorithms/pathfinding/BFS";
+import { A } from "./Algorithms/pathfinding/A";
 
 // Constants for start node, end node, # of rows and # of columns
-const GRID_ROWS = 10;
-const GRID_COLUMNS = 15;
-const START_NODE_ROW = 5;
-const START_NODE_COLUMN = 3;
-const END_NODE_ROW = 5;
-const END_NODE_COLUMN = 12;
+const GRID_ROWS = 20;
+const GRID_COLUMNS = 50;
+let startNodeRow = 5;
+let startNodeColumn = 3;
+let endNodeRow = 0;
+let endNodeColumn = 0;
+let isThereStart = true;
+let isThereEnd = true;
 
 class PathVisualizer extends Component {
   // Constructor
@@ -35,7 +40,39 @@ class PathVisualizer extends Component {
   handleMouseDown(row, column) {
     console.log(`mouse down at ${row} ${column}`);
     const newGrid = this.state.grid;
-    newGrid[row][column].isWall = !newGrid[row][column].isWall; // Changes it to whatever is the opposite of isWall
+    if (
+      !newGrid[row][column].isStart &&
+      !newGrid[row][column].isEnd &&
+      isThereStart &&
+      isThereEnd
+    ) {
+      newGrid[row][column].isWall = !newGrid[row][column].isWall; // Changes it to whatever is the opposite of isWall
+      this.setState({ grid: newGrid, mouseIsPressed: true });
+    } else if (newGrid[row][column].isStart) {
+      newGrid[row][column].isStart = !newGrid[row][column].isStart;
+      isThereStart = false;
+      this.setState({ grid: newGrid, mouseIsPressed: false });
+      return;
+    } else if (newGrid[row][column].isEnd) {
+      newGrid[row][column].isEnd = !newGrid[row][column].isEnd;
+      isThereEnd = false;
+      this.setState({ grid: newGrid, mouseIsPressed: false });
+      return;
+    } else if (isThereStart == false) {
+      newGrid[row][column].isStart = !newGrid[row][column].isStart;
+      startNodeRow = row;
+      startNodeColumn = column;
+      isThereStart = true;
+      this.setState({ grid: newGrid, mouseIsPressed: false });
+      return;
+    } else if (isThereEnd == false) {
+      newGrid[row][column].isEnd = !newGrid[row][column].isEnd;
+      isThereEnd = true;
+      endNodeRow = row;
+      endNodeColumn = column;
+      this.setState({ grid: newGrid, mouseIsPressed: false });
+      return;
+    }
     this.setState({ grid: newGrid, mouseIsPressed: true });
   }
 
@@ -51,7 +88,7 @@ class PathVisualizer extends Component {
     this.setState({ grid: newGrid });
   }
 
-  handleMouseUp() {
+  handleMouseUp(row, column) {
     console.log(`mouse up`);
     this.setState({ mouseIsPressed: false });
   }
@@ -83,8 +120,8 @@ class PathVisualizer extends Component {
   visualizeDijkstra() {
     const grid = this.state.grid;
 
-    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
-    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+    const startNode = grid[startNodeRow][startNodeColumn];
+    const endNode = grid[endNodeRow][endNodeColumn];
 
     const visitedNodesInOrder = dijkstra(grid, startNode, endNode);
     const shortestPath = getNodesInShortestPathOrder(endNode);
@@ -97,8 +134,8 @@ class PathVisualizer extends Component {
   visualizeDFS() {
     const { grid } = this.state;
 
-    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
-    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+    const startNode = grid[startNodeRow][startNodeColumn];
+    const endNode = grid[endNodeRow][endNodeColumn];
 
     const visitedNodesInOrder = DFS(grid, startNode, endNode);
 
@@ -110,8 +147,8 @@ class PathVisualizer extends Component {
   visualizeAstar() {
     const { grid } = this.state;
 
-    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
-    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+    const startNode = grid[startNodeRow][startNodeColumn];
+    const endNode = grid[endNodeRow][endNodeColumn];
 
     const visitedNodesInOrder = A(grid, startNode, endNode);
 
@@ -126,8 +163,8 @@ class PathVisualizer extends Component {
   visualizeBFS() {
     const { grid } = this.state;
 
-    const startNode = grid[START_NODE_ROW][START_NODE_COLUMN];
-    const endNode = grid[END_NODE_ROW][END_NODE_COLUMN];
+    const startNode = grid[startNodeRow][startNodeColumn];
+    const endNode = grid[endNodeRow][endNodeColumn];
 
     const visitedNodesInOrder = BFS(grid, startNode, endNode);
 
@@ -139,12 +176,18 @@ class PathVisualizer extends Component {
     this.animateShortest(shortestPath);
   }
 
+  clearBoard() {
+    const grid = createGrid();
+
+    this.setState({ grid: grid });
+  }
+
   // Render(), mounts to DOM
   // Renders a <Node /> for each item in grid
   render() {
     const { grid } = this.state;
     // console.log(this.state.mouseIsPressed);
-    // console.log("render");
+    console.log("render");
 
     return (
       <div>
@@ -160,6 +203,7 @@ class PathVisualizer extends Component {
         <button onClick={() => this.visualizeBFS()}>
           Visualize Breadth-First-Search Algorithm
         </button>
+        <button onClick={() => this.clearBoard()}>Clear Board</button>
         <div className="grid">
           {
             // using a nested map methods to create each Node component with props from this.state.grid's nodes' properties
@@ -236,8 +280,8 @@ function createNode(row, column) {
   const node = {
     row,
     column,
-    isStart: row == START_NODE_ROW && column == START_NODE_COLUMN,
-    isEnd: row == END_NODE_ROW && column == END_NODE_COLUMN,
+    isStart: row == startNodeRow && column == startNodeColumn,
+    isEnd: row == endNodeRow && column == endNodeColumn,
     distance: Infinity,
     distanceToEnd: Infinity,
     fcost: Infinity,
