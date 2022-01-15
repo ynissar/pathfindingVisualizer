@@ -1,0 +1,68 @@
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+header {
+  background: #55d6aa;
+}
+
+header::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.logo {
+  float: left;
+  max-height: 150px;
+  padding: 10px 0;
+}
+
+nav {
+  float: right;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0px;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block;
+  margin-left: 90px;
+  padding-top: 70px;
+
+  position: relative;
+}
+
+nav p {
+  color: #444;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  cursor: pointer;
+}
+
+nav p:hover {
+  color: #000;
+}
+
+nav p::before {
+  content: "";
+  display: block;
+  height: 5px;
+  background-color: #444;
+
+  position: absolute;
+  top: 0;
+  width: 0%;
+
+  transition: all ease-in-out 200ms;
+}
+
+nav p:hover::before {
+  width: 100%;
+}

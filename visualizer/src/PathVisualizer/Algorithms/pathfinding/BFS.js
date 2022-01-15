@@ -1,4 +1,4 @@
-import { getUnvisitedNeighbours } from "./general";
+import { getUnvisitedNeighbours } from "../general";
 
 export function BFS(grid, startNode, endNode) {
   if (!startNode || !endNode || startNode == endNode) {

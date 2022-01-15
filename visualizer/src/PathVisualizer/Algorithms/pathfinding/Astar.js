@@ -1,4 +1,4 @@
-import { getUnvisitedNeighbours, getAllNodes } from "./general";
+import { getUnvisitedNeighbours, getAllNodes } from "../general";
 
 export function Astar(grid, startNode, endNode) {
   if (!startNode || !endNode || startNode == endNode) {

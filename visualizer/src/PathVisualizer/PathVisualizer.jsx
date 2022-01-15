@@ -8,14 +8,15 @@ import {
 import { DFS } from "./Algorithms/pathfinding/DFS";
 import { BFS } from "./Algorithms/pathfinding/BFS";
 import { A } from "./Algorithms/pathfinding/A";
+import Header from "./Header";
 
 // Constants for start node, end node, # of rows and # of columns
-const GRID_ROWS = 20;
-const GRID_COLUMNS = 50;
-let startNodeRow = 5;
+const GRID_ROWS = 21;
+const GRID_COLUMNS = 51;
+let startNodeRow = 10;
 let startNodeColumn = 3;
-let endNodeRow = 0;
-let endNodeColumn = 0;
+let endNodeRow = 10;
+let endNodeColumn = 47;
 let isThereStart = true;
 let isThereEnd = true;
 
@@ -32,6 +33,12 @@ class PathVisualizer extends Component {
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.visualizeDFS = this.visualizeDFS.bind(this);
+    this.visualizeAstar = this.visualizeAstar.bind(this);
+    this.visualizeBFS = this.visualizeBFS.bind(this);
+    this.visualizeDijkstra = this.visualizeDijkstra.bind(this);
+    this.clearBoard = this.clearBoard.bind(this);
+    this.clearPath = this.clearPath.bind(this);
   }
 
   // ComponentsDidMount, runs after render(), then causes render to run again
@@ -177,10 +184,29 @@ class PathVisualizer extends Component {
   }
 
   clearBoard() {
-    const grid = createGrid();
+    let grid = createGrid();
 
     this.setState({ grid: grid });
   }
+
+  clearPath() {
+    let { grid } = this.state;
+
+    grid.map((row, rowIndex) =>
+      row.map((node, index) => {
+        node.isChecked = false;
+        node.isVisited = false;
+        node.previousNode = null;
+        node.distance = Infinity;
+        node.distanceToEnd = Infinity;
+        node.fcost = Infinity;
+      })
+    );
+
+    this.setState({ grid: grid });
+  }
+
+  recursiveDivision() {}
 
   // Render(), mounts to DOM
   // Renders a <Node /> for each item in grid
@@ -191,65 +217,57 @@ class PathVisualizer extends Component {
 
     return (
       <div>
-        <button onClick={() => this.visualizeDijkstra()}>
-          Visualize Dijkstra's Algorithm
-        </button>
-        <button onClick={() => this.visualizeDFS()}>
-          Visualize Depth-First-Search Algorithm
-        </button>
-        <button onClick={() => this.visualizeAstar()}>
-          Visualize A* Algorithm
-        </button>
-        <button onClick={() => this.visualizeBFS()}>
-          Visualize Breadth-First-Search Algorithm
-        </button>
-        <button onClick={() => this.clearBoard()}>Clear Board</button>
+        <Header
+          visualizeAstar={this.visualizeAstar}
+          visualizeDFS={this.visualizeDFS}
+          visualizeBFS={this.visualizeBFS}
+          visualizeDijkstra={this.visualizeDijkstra}
+          clearBoard={this.clearBoard}
+          clearPath={this.clearPath}
+        ></Header>
+
         <div className="grid">
           {
             // using a nested map methods to create each Node component with props from this.state.grid's nodes' properties
             grid.map((row, rowIndex) => {
-              return (
-                <div className="row" key={rowIndex}>
-                  {row.map((node, nodeIndex) => {
-                    const {
-                      row,
-                      column,
-                      isStart,
-                      isEnd,
-                      distance,
-                      distanceToEnd,
-                      fcost,
-                      isVisited,
-                      isWall,
-                      previousNode,
-                      isChecked,
-                      isShortest,
-                      reference,
-                    } = node;
-                    return (
-                      <Node
-                        key={nodeIndex}
-                        row={row}
-                        column={column}
-                        isStart={isStart}
-                        isEnd={isEnd}
-                        distance={distance}
-                        distanceToEnd={distanceToEnd}
-                        fcost={fcost}
-                        isVisited={isVisited}
-                        isWall={isWall}
-                        previousNode={previousNode}
-                        isChecked={isChecked}
-                        isShortest={isShortest}
-                        onMouseDown={this.handleMouseDown}
-                        onMouseEnter={this.handleMouseEnter}
-                        onMouseUp={this.handleMouseUp}
-                        ref={reference}
-                      ></Node>
-                    );
-                  })}
-                </div>
-              );
+              return row.map((node, nodeIndex) => {
+                const {
+                  row,
+                  column,
+                  isStart,
+                  isEnd,
+                  distance,
+                  distanceToEnd,
+                  fcost,
+                  isVisited,
+                  isWall,
+                  previousNode,
+                  isChecked,
+                  isShortest,
+                  reference,
+                } = node;
+                return (
+                  <Node
+                    key={nodeIndex}
+                    row={row}
+                    column={column}
+                    isStart={isStart}
+                    isEnd={isEnd}
+                    distance={distance}
+                    distanceToEnd={distanceToEnd}
+                    fcost={fcost}
+                    isVisited={isVisited}
+                    isWall={isWall}
+                    previousNode={previousNode}
+                    isChecked={isChecked}
+                    isShortest={isShortest}
+                    onMouseDown={this.handleMouseDown}
+                    onMouseEnter={this.handleMouseEnter}
+                    onMouseUp={this.handleMouseUp}
+                    ref={reference}
+                  ></Node>
+                );
+              });
             })
           }
         </div>

@@ -1,4 +1,4 @@
-import { getUnvisitedNeighbours, getAllNodes } from "./general";
+import { getUnvisitedNeighbours, getAllNodes } from "../general";
 
 export function dijkstra(grid, startNode, endNode) {
   // for edge case where there is no startNode or endNode or both are the same node

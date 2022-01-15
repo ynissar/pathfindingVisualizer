@@ -1,4 +1,4 @@
-import { getUnvisitedNeighbours } from "./general";
+import { getUnvisitedNeighbours } from "../general";
 
 export function DFS(grid, startNode, endNode) {
   if (!startNode || !endNode || startNode == endNode) {

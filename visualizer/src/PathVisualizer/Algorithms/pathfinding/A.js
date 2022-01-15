@@ -1,4 +1,4 @@
-import { getUnvisitedNeighbours, getAllNodes } from "./general";
+import { getUnvisitedNeighbours, getAllNodes } from "../general";
 
 export function A(grid, startNode, endNode) {
   if (!startNode || !endNode || startNode == endNode) {
