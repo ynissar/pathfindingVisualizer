@@ -31,5 +31,3 @@ export function getAllNodes(grid) {
 
   return nodes;
 }
-
-// Sorts the nodes in the given array in order of shortest distance to longest distance (longest being Infinity)

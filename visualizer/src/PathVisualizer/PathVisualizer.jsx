@@ -17,6 +17,8 @@ let startNodeRow = 10;
 let startNodeColumn = 3;
 let endNodeRow = 10;
 let endNodeColumn = 47;
+
+// Toggle whether a start or end nodes needs to be placed
 let isThereStart = true;
 let isThereEnd = true;
 
@@ -30,6 +32,7 @@ class PathVisualizer extends Component {
       mouseIsPressed: false,
     };
 
+    // function binding
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
     this.handleMouseEnter = this.handleMouseEnter.bind(this);
@@ -41,11 +44,10 @@ class PathVisualizer extends Component {
     this.clearPath = this.clearPath.bind(this);
   }
 
-  // ComponentsDidMount, runs after render(), then causes render to run again
-  // Creates grid for PathVisualizer inputting Nodes
-
+  // Mouse down method
+  // Toggles walls on or off
+  // Toggles start or end node placement if necessary
   handleMouseDown(row, column) {
-    console.log(`mouse down at ${row} ${column}`);
     const newGrid = this.state.grid;
     if (
       !newGrid[row][column].isStart &&
@@ -83,6 +85,8 @@ class PathVisualizer extends Component {
     this.setState({ grid: newGrid, mouseIsPressed: true });
   }
 
+  // Mouse enter function
+  // used to check whether the mouse is currently pressed, if it is, then toggle wall on/off
   handleMouseEnter(row, column) {
     console.log(`mouse enter at ${row} ${column}`);
     console.log(this.state.mouseIsPressed);
@@ -95,12 +99,16 @@ class PathVisualizer extends Component {
     this.setState({ grid: newGrid });
   }
 
+  // Mouse up function
+  // If the mouse goes up, then the mouse is no longer pressed in state
   handleMouseUp(row, column) {
     console.log(`mouse up`);
     this.setState({ mouseIsPressed: false });
   }
 
-  animateDijkstra(visitedNodesInOrder) {
+  // Animate visited function
+  // Animates the nodes that are visited by the given pathfinding algorithm
+  animateVisited(visitedNodesInOrder) {
     for (let i = 0; i < visitedNodesInOrder.length; i++) {
       setTimeout(() => {
         const node = visitedNodesInOrder[i];
@@ -112,6 +120,8 @@ class PathVisualizer extends Component {
     }
   }
 
+  // Animate shortest path function
+  // Animates the nodes that are given as shortest path nodes
   animateShortest(shortestPath) {
     for (let i = 0; i < shortestPath.length; i++) {
       setTimeout(() => {
@@ -124,6 +134,8 @@ class PathVisualizer extends Component {
     }
   }
 
+  // visualize dijkstras algorithm function
+  // Visualizes the dijkstras algorithm by apply functions to receive the nodes visited and the shortest path
   visualizeDijkstra() {
     const grid = this.state.grid;
 
@@ -134,10 +146,12 @@ class PathVisualizer extends Component {
     const shortestPath = getNodesInShortestPathOrder(endNode);
     console.log(visitedNodesInOrder);
     console.log(shortestPath);
-    this.animateDijkstra(visitedNodesInOrder);
+    this.animateVisited(visitedNodesInOrder);
     this.animateShortest(shortestPath);
   }
 
+  // visualize DFS algorithm function
+  // Visualizes the DFS algorithm by apply functions to receive the nodes visited and the shortest path
   visualizeDFS() {
     const { grid } = this.state;
 
@@ -147,10 +161,12 @@ class PathVisualizer extends Component {
     const visitedNodesInOrder = DFS(grid, startNode, endNode);
 
     console.log(visitedNodesInOrder);
-    this.animateDijkstra(visitedNodesInOrder);
+    this.animateVisited(visitedNodesInOrder);
     this.animateShortest(visitedNodesInOrder);
   }
 
+  // visualize A* algorithm function
+  // Visualizes the A* algorithm by apply functions to receive the nodes visited and the shortest path
   visualizeAstar() {
     const { grid } = this.state;
 
@@ -163,10 +179,12 @@ class PathVisualizer extends Component {
     const shortestPath = getNodesInShortestPathOrder(endNode);
     console.log(shortestPath);
     console.log(visitedNodesInOrder);
-    this.animateDijkstra(visitedNodesInOrder);
+    this.animateVisited(visitedNodesInOrder);
     this.animateShortest(shortestPath);
   }
 
+  // visualize BFS algorithm function
+  // Visualizes the dijkstras algorithm by apply functions to receive the nodes visited and the shortest path
   visualizeBFS() {
     const { grid } = this.state;
 
@@ -179,16 +197,20 @@ class PathVisualizer extends Component {
     const shortestPath = getNodesInShortestPathOrder(endNode);
     console.log(shortestPath);
     console.log(visitedNodesInOrder);
-    this.animateDijkstra(visitedNodesInOrder);
+    this.animateVisited(visitedNodesInOrder);
     this.animateShortest(shortestPath);
   }
 
+  // Clear board function
+  // Resets grid to its original state
   clearBoard() {
     let grid = createGrid();
 
     this.setState({ grid: grid });
   }
 
+  // Clear path function
+  // resets majority of the qualities of the grid in state, leaving the walls, start, and end nodes
   clearPath() {
     let { grid } = this.state;
 
@@ -200,19 +222,21 @@ class PathVisualizer extends Component {
         node.distance = Infinity;
         node.distanceToEnd = Infinity;
         node.fcost = Infinity;
+        node.isShortest = false;
       })
     );
 
     this.setState({ grid: grid });
   }
 
+  // TODO
+  // RECURSIVE DIVISION MAZE GENERATION
   recursiveDivision() {}
 
   // Render(), mounts to DOM
   // Renders a <Node /> for each item in grid
   render() {
     const { grid } = this.state;
-    // console.log(this.state.mouseIsPressed);
     console.log("render");
 
     return (

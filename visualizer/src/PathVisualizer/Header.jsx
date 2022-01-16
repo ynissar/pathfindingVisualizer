@@ -32,7 +32,7 @@ class Header extends Component {
                 <p onClick={() => visualizeAstar()}>Visualize A Star</p>
               </li>
               <li>
-                <p onClick={() => visualizeDijkstra()}>Visualize Djikstras</p>
+                <p onClick={() => visualizeDijkstra()}>Visualize Dijkstras</p>
               </li>
               <li>
                 <p onClick={() => clearBoard()}>Clear Board</p>
