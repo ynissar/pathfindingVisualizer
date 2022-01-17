@@ -1,5 +1,7 @@
 # pathfindingVisualizer
 
+![Pathfinding Visualizer](./githublogo.png)
+
 Pathfinding Visualizer is a visualization tool used to illustrate how a computer may go about finding a path amongst obstacles using different commonly used graph traversal algorithms. I first became interested in pathfinding algorithms in my Algorithms and Data structures class where I learned about Breadth-first search, depth-first search and Dijkstra's algorithm. When learning about the different graph traversals, I found it difficult to visualize in a more practical context. So, I thought it would make for an interesting project to create a pathfinding visualizer using algorithms to find paths from the start point to the end point.
 
 Pathfinding Visualizer is built using the React framework, javascript, HTML, and CSS.
