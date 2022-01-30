@@ -12,7 +12,7 @@ class Node extends Component {
   // Should component update lifecycle method
   // Checks whether certain properties affecting the styling of the node have changed
   // If yes, then update the individual component
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     if (
       this.props.isChecked === nextProps.isChecked &&
       this.props.isWall === nextProps.isWall &&
@@ -25,7 +25,7 @@ class Node extends Component {
     return true;
   }
   // Render()
-  // Puts node into the DOM, adds additional class depending on if it is the end or start
+  // Puts node into the DOM
   render() {
     const {
       row,
@@ -34,12 +34,10 @@ class Node extends Component {
       isStart,
       isChecked,
       isShortest,
-      fcost,
       isWall,
       onMouseDown,
       onMouseEnter,
       onMouseUp,
-      reference,
     } = this.props;
 
     // adds additional class based on what type of node it is
@@ -58,7 +56,6 @@ class Node extends Component {
     //returns a node containing mouse down, mouse enter, and mouse up from the parent PathVisualizer component
     return (
       <div
-        ref={reference}
         id={`node-${row}-${column}`}
         className={`node ${endOrStartClass}`}
         onMouseDown={() => onMouseDown(row, column)}

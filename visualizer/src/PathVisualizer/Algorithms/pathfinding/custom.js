@@ -1,6 +1,8 @@
 import { getUnvisitedNeighbours, getAllNodes } from "../general";
 
-export function Astar(grid, startNode, endNode) {
+// IGNORE
+// Making my own search algorithm
+export function custom(grid, startNode, endNode) {
   if (!startNode || !endNode || startNode == endNode) {
     return false;
   }

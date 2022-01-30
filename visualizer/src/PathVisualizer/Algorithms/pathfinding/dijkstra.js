@@ -1,7 +1,7 @@
 import { getUnvisitedNeighbours, getAllNodes } from "../general";
 
 export function dijkstra(grid, startNode, endNode) {
-  // for edge case where there is no startNode or endNode or both are the same node
+  // Returns if there is no start node, end node or if they are the same node
   if (!startNode || !endNode || startNode == endNode) {
     return false;
   }
@@ -53,7 +53,7 @@ export function getNodesInShortestPathOrder(endNode) {
   const nodesInShortestPathOrder = [];
 
   let currentNode = endNode;
-
+  // loops until there aren't anymore previous nodes
   while (currentNode !== null) {
     nodesInShortestPathOrder.unshift(currentNode);
     currentNode = currentNode.previousNode;

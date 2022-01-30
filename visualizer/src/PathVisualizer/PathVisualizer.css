@@ -1,9 +1,10 @@
 .grid {
   display: inline-grid;
-  grid-template-rows: repeat(21, auto);
+  grid-template-rows: repeat(25, auto);
   grid-template-columns: repeat(51, auto);
 
   height: 80vh;
-  width: 88vw;
+  width: 85vw;
   margin-top: 50px;
+  margin-bottom: 50px;
 }

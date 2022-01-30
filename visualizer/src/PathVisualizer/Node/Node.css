@@ -1,7 +1,5 @@
 .node {
   border: 1px solid #42a886;
-  /* background-color: blue; <-- for when we implement colors */
-  /* display: inline-block; */
 }
 
 .end-node {
@@ -13,8 +11,8 @@
 }
 
 .checked-node {
-  animation-name: visitedAnimation;
-  animation-duration: 1.5s;
+  animation-name: checkedAnimation;
+  animation-duration: 1s;
   animation-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   animation-delay: 0;
   animation-direction: alternate-reverse;
@@ -23,7 +21,8 @@
   animation-play-state: running;
 }
 
-@keyframes visitedAnimation {
+/* CSS node being visited animation */
+@keyframes checkedAnimation {
   0% {
     transform: scale(0.3);
     background-color: rgba(0, 0, 66, 0.75);
