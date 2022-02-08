@@ -23,7 +23,7 @@ Breadth-first search is an algorithm which searches each node at the present dep
 **Dijkstra's Algorithm**
 Dijkstra's Algorithm is similar to Breadth-first search in that it searches each node at the present depth before continuing to the next. However, it tracks each node's distance from the start node and the previous node. It uses these two additional metrics to constantly update the shortest path to each node. This gaurentees the shortest path from the start node to the end node.
 
-![Dijkstra Demo](./images/dijkstra.mp4)
+[![Dijkstra Demo](https://j.gifs.com/k2X45X.gif)](https://www.youtube.com/watch?v=jQ687dtl248&ab_channel=YusufNissar)
 
 **A\* Algorithm**
 A* is similar to Dijkstra's algorithm with the addition of using heuristics to better guide its search. By assigning each of the possibly visitable nodes with an fscore (which is the distance it is from the start node and the distance from the end node), it can infer what the next best node to visit is. With the addition of heuristics, A* is able to reach the same conclusion as Dijkstra's (by finding the shortest path) while often having searched fewer nodes. This is why A\* is used so often in the computer science field.
