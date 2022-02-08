@@ -6,7 +6,7 @@ Pathfinding Visualizer is a visualization tool used to illustrate how a computer
 
 ## Demo
 
-![Full Demo](https://www.youtube.com/watch?v=Q2c9GHXUQVM)
+[![Full Demo](https://i.imgur.com/0UdG01P.png)](https://www.youtube.com/watch?v=Q2c9GHXUQVM)
 
 ## Algorithms
 
