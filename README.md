@@ -6,29 +6,29 @@ Pathfinding Visualizer is a visualization tool used to illustrate how a computer
 
 ## Demo
 
-![Full Demo](./images/demo.mp4)
+![Full Demo](https://www.youtube.com/watch?v=Q2c9GHXUQVM)
 
 ## Algorithms
 
 **Depth-First Search**
 Depth-first search is an algorithm which starts at the start node (root node), and searches each possible path (branch) to the furthest extent before backtracking.
 
-![DFS Demo](./images/DFS.mp4)
+[![DFS Demo](https://j.gifs.com/DqWn9n.gif)](https://www.youtube.com/watch?v=yt2YfoFxD0E)
 
 **Breadth-First Search**
 Breadth-first search is an algorithm which searches each node at the present depth before continuing to the next depth.
 
-![BFS Demo](./images/BFS.mp4)
+[![BFS Demo](https://j.gifs.com/oZX4QK.gif)](https://www.youtube.com/watch?v=ICmpIT02RMs&ab_channel=YusufNissar)
 
 **Dijkstra's Algorithm**
 Dijkstra's Algorithm is similar to Breadth-first search in that it searches each node at the present depth before continuing to the next. However, it tracks each node's distance from the start node and the previous node. It uses these two additional metrics to constantly update the shortest path to each node. This gaurentees the shortest path from the start node to the end node.
 
-[![Dijkstra Demo](https://j.gifs.com/k2X45X.gif)](https://www.youtube.com/watch?v=jQ687dtl248&ab_channel=YusufNissar)
+[![Dijkstra Demo](https://j.gifs.com/k2X45X.gif)](https://www.youtube.com/watch?v=jQ687dtl248)
 
 **A\* Algorithm**
 A* is similar to Dijkstra's algorithm with the addition of using heuristics to better guide its search. By assigning each of the possibly visitable nodes with an fscore (which is the distance it is from the start node and the distance from the end node), it can infer what the next best node to visit is. With the addition of heuristics, A* is able to reach the same conclusion as Dijkstra's (by finding the shortest path) while often having searched fewer nodes. This is why A\* is used so often in the computer science field.
 
-![A star Demo](./images/Astar.mp4)
+[![A* Demo](https://j.gifs.com/Z8rQV6.gif)](https://www.youtube.com/watch?v=BjWkyNcnc_k)
 
 ## Features
 
