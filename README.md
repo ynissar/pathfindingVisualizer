@@ -4,10 +4,6 @@
 
 Pathfinding Visualizer is a visualization tool used to illustrate how a computer may go about finding a path amongst obstacles using different commonly used graph traversal algorithms. I first became interested in pathfinding algorithms in my Algorithms and Data structures class where I learned about Breadth-first search, depth-first search and Dijkstra's algorithm. When learning about the different graph traversals, I found it difficult to visualize in a more practical context. So, I thought it would make for an interesting project to create a pathfinding visualizer using algorithms to find paths from the start point to the end point.
 
-## Demo
-
-[![Full Demo](https://i.imgur.com/0UdG01P.png)](https://www.youtube.com/watch?v=Q2c9GHXUQVM)
-
 ## Algorithms
 
 **Depth-First Search**
@@ -29,6 +25,11 @@ Dijkstra's Algorithm is similar to Breadth-first search in that it searches each
 A* is similar to Dijkstra's algorithm with the addition of using heuristics to better guide its search. By assigning each of the possibly visitable nodes with an fscore (which is the distance it is from the start node and the distance from the end node), it can infer what the next best node to visit is. With the addition of heuristics, A* is able to reach the same conclusion as Dijkstra's (by finding the shortest path) while often having searched fewer nodes. This is why A\* is used so often in the computer science field.
 
 [![A* Demo](https://j.gifs.com/Z8rQV6.gif)](https://www.youtube.com/watch?v=BjWkyNcnc_k)
+
+## Full Demo
+
+Click to watch the video!
+[![Full Demo](https://i.imgur.com/0UdG01P.png)](https://www.youtube.com/watch?v=Q2c9GHXUQVM)
 
 ## Features
 
