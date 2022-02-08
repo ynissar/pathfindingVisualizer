@@ -26,11 +26,6 @@ A* is similar to Dijkstra's algorithm with the addition of using heuristics to b
 
 [![A* Demo](https://j.gifs.com/Z8rQV6.gif)](https://www.youtube.com/watch?v=BjWkyNcnc_k)
 
-## Full Demo
-
-Click to watch the video!
-[![Full Demo](https://i.imgur.com/0UdG01P.png)](https://www.youtube.com/watch?v=Q2c9GHXUQVM)
-
 ## Features
 
 - shortest path visualization
